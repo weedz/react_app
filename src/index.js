@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+
+import {browserHistory} from 'react-router';
+import Routes from './routes';
+
 import './index.css';
 
-const user = {
-    name: 'WeeDz',
-};
-
 ReactDOM.render(
-  <App user={user}/>,
+    <Routes history={browserHistory}/>,
   document.getElementById('root')
 );

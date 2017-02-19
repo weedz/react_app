@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Header.css';
 
-class Header extends Component {
+export default class Header extends Component {
     render() {
         const headerItems = [
             'list item 1',
@@ -16,5 +16,3 @@ class Header extends Component {
         );
     }
 }
-
-export default Header;
