@@ -4,12 +4,12 @@ import './Header.css';
 export default class Header extends Component {
     render() {
         const headerItems = [
-            'list item 1',
-            'list item 2'
+            {url: 'sql',body: 'SQL Test'},
+            {url: '/', body: 'Home'},
         ];
         const header = headerItems.map((number) =>
-            <li key={number.toString()}>
-                {number}</li>
+            <a href={number.url} key={number.url.toString()}><li>
+                {number.body}</li></a>
         );
         return (
             <ul className="Header">{header}</ul>
