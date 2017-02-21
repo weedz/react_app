@@ -11,8 +11,7 @@ export default class SQL extends React.Component {
         const stateRef = this;
         const items = [];
         fetch('http://localhost:9000/api/sql-test', {
-            method: 'post',
-            body: 'a=1'
+            method: 'post'
         }).then(function(res) {
             return res.json();
         }).then(function(json) {

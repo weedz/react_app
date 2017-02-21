@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 import './Header.css';
 
 export default class Header extends Component {
     render() {
         const headerItems = [
-            {url: 'sql',body: 'SQL Test'},
             {url: '/', body: 'Home'},
+            {url: 'sql',body: 'SQL Test'},
         ];
-        const header = headerItems.map((number) =>
-            <a href={number.url} key={number.url.toString()}><li>
-                {number.body}</li></a>
-        );
         return (
-            <ul className="Header">{header}</ul>
+            <ul className="Header">
+                {
+                    headerItems.map((i) =>
+                        <Link to={i.url} key={i.url.toString()}><li>{i.body}</li></Link>)
+                }
+            </ul>
         );
     }
 }
