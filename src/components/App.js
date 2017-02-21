@@ -2,11 +2,12 @@ import React from 'react';
 import './App.css';
 
 export default class App extends React.Component {
-  render() {
-    return (
-        <div className="App">
-            <p>Hello?</p>
-        </div>
-    );
-  }
+    render() {
+        document.title = 'Home';
+        return (
+            <div className="App">
+                <p>Hello?</p>
+            </div>
+        );
+    }
 }
