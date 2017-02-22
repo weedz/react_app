@@ -7,6 +7,7 @@ export default class Header extends Component {
         const headerItems = [
             {url: '/', body: 'Home'},
             {url: 'sql',body: 'SQL Test'},
+            {url: 'customers', body: 'Customers'},
         ];
         return (
             <ul className="Header">
