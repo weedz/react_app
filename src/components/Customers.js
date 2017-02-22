@@ -10,7 +10,7 @@ export default class Customers extends React.Component {
         };
         const _this = this;
         const items = [];
-        fetch('http://localhost:9000/api/customers/all', {
+        fetch('/api/customers/all', {
             method: 'post'
         }).then((res) => {
             return res.json();

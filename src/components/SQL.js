@@ -10,7 +10,7 @@ export default class SQL extends React.Component {
         };
         const stateRef = this;
         const items = [];
-        fetch('http://localhost:9000/api/sql-test', {
+        fetch('/api/sql-test', {
             method: 'post'
         }).then(function(res) {
             return res.json();
@@ -27,7 +27,7 @@ export default class SQL extends React.Component {
     handleSubmit() {
         const stateRef = this;
         const numChildren = this.state.numChildren;
-        fetch('http://localhost:9000/api/sql-test', {
+        fetch('/api/sql-test', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
