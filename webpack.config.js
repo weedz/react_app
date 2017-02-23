@@ -14,7 +14,7 @@ let nodeModules = {};
 fs.readdirSync(path.resolve(__dirname,'node_modules'))
     .filter(x => ['.bin'].indexOf(x) === -1)
     .forEach(mod => { nodeModules[mod] = `commonjs ${mod}`; });
-const server_config = {
+const server = {
     name: 'server',
     target: 'node',
     node: {
@@ -38,16 +38,16 @@ const server_config = {
             }
         ]
     },
-    stats: {
-        colors:true
-    },
+    plugins: [
+        // Minify the code.
+        //new webpack.optimize.UglifyJsPlugin(),
+    ]
 };
-const config = {
-    name: 'web-app',
+const client = {
+    name: 'client',
     target: 'web',
     bail: true,
     devtool: 'source-map',
-    stats:{colors:true},
     entry: [
         APP_DIR + '/index.js'
     ],
@@ -118,8 +118,6 @@ const config = {
 
         }),
         new ExtractTextPlugin("static/css/styles.css"),
-        // This helps ensure the builds are consistent if source hasn't changed:
-        new webpack.optimize.OccurrenceOrderPlugin(),
         // Minify the code.
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -138,6 +136,6 @@ const config = {
 };
 
 module.exports = [
-    config,
-    server_config
+    client,
+    server
 ];

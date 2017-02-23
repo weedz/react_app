@@ -9,3 +9,7 @@ ReactDOM.render(
     <Routes history={browserHistory}/>,
   document.getElementById('root')
 );
+
+if (module.hot) {
+    module.hot.accept();
+}

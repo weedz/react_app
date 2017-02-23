@@ -8,14 +8,21 @@ const APP_DIR = path.resolve(__dirname, '../src');
 process.env.NODE_ENV = 'development';
 
 const config = {
+    name: 'client',
     target: 'web',
+    devtool: 'source-map',
+    context: __dirname,
     entry: [
-        APP_DIR + '/index.js'
+        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+        path.resolve(APP_DIR, './index.js')
     ],
+    stats: {
+        colors: true
+    },
     output: {
-        path: '/',
-        publicPath: 'http://localhost:8081/assets/',
-        filename: 'static/js/bundle.js'
+        path: __dirname,
+        publicPath: '/',
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
@@ -50,19 +57,13 @@ const config = {
         ]
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
-        new InterpolateHtmlPlugin({
-            'PUBLIC_URL' : ''
-        }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: path.resolve(__dirname + '/../public/index.html'),
-        }),
     ]
 };
 
-module.exports = config;
+module.exports = config

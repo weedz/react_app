@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 process.env.NODE_ENV = 'development';
 const DEFAULT_PORT = process.env.PORT || 9000;
@@ -6,30 +6,36 @@ const DEFAULT_PORT = process.env.PORT || 9000;
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const WebpackDevServer = require('webpack-dev-server');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const path = require('path');
-const config = require('./webpack.dev.config');
+const config = require('./webpack.dev.config.js');
 
-const detect = require('detect-port');
+const compiler = webpack(config);
 
-const app = require('./app');
+const http = require('http');
 
-function run(port) {
-    app.listen(port, () => {
-        console.info('App listening on port ' + port);
+let app = require('../server/app');
+
+let server;
+
+function setupApp() {
+    app.get(/\/(?!.*\.js)(?!__webpack.*).*/, (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'index.html'));
     });
-    new WebpackDevServer(webpack(config), {
+    app.use(webpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath,
         stats: {colors: true}
-    }).listen('8081', 'localhost', function(err, result) {
-        if (err) {
-            console.log(err);
-            process.exit(1);
-        }
-        console.log('Dev server listening at port 8081');
+    }));
+    app.use(webpackHotMiddleware(compiler, {
+        log: console.log,
+        path: '/__webpack_hmr',
+        heartbeat: 10*1000
+    }));
+}
+function startServer() {
+    setupApp();
+    server = http.createServer(app);
+    server.listen(DEFAULT_PORT, () => {
+        console.info('App listening on port ' + DEFAULT_PORT);
     });
 }
-
-
-run(DEFAULT_PORT);
+startServer();
