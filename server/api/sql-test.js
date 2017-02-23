@@ -5,19 +5,8 @@ const mysql = require('mysql');
 const parser = require('body-parser');
 const jsonParser = parser.json();
 
-function connect() {
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'reactjs'
-    });
-    connection.connect();
-    return connection;
-}
-
 router.post('/', jsonParser, function(req, res) {
-    const connection = connect();
+    const connection = req.app.get('_store').mysql;
     let str = "select * from test";
     if (req.body.value) {
         str += " where id = " + connection.escape(req.body.value);
@@ -31,8 +20,8 @@ router.post('/', jsonParser, function(req, res) {
     });
 });
 router.post('/:id', function(req, res) {
-    const connection = connect();
-    console.log(req.body);
+    const connection = req.app.get('_store').mysql;
+    //console.log(req.body);
     connection.query("select * from test where id = " + connection.escape(req.params.id), function(err, rows, fields) {
         if (err) {
             console.error('Error: ' + err);

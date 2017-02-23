@@ -15,6 +15,7 @@ const app = express();
 app.use(function(req, res, next) {
     require('../server/app')(req, res, next);
 });
+require('../server/setup')(app);
 
 let server;
 

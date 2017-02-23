@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http');
 const app = express();
 app.use('/', require('./app'));
+require('./setup')(app);
 
 app.use(express.static(path.join(__dirname, '..','build')));
 
