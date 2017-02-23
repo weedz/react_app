@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start-dev": "node server-dev/index.js",
-    "start": "node server/index.js",
+    "start": "node build/server.js",
     "build": "webpack",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

@@ -14,11 +14,11 @@ const connection = mysql.createConnection({
 connection.connect();
 
 router.post('/:id', function(req, res) {
-    let q = "select * from customers";
+    let str = "select * from customers";
     if (req.params.id != 'all') {
-        q += ' where id = ' + connection.escape(req.params.id);
+        str += ' where id = ' + connection.escape(req.params.id);
     }
-    connection.query(q, function(err, rows, fields) {
+    connection.query(str, function(err, rows, fields) {
         if (err) {
             console.error('Error: ' + err);
         } else {

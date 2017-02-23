@@ -9,7 +9,41 @@ const APP_DIR = path.join(__dirname, '/src');
 
 process.env.NODE_ENV = 'production';
 
+const fs = require('fs');
+let nodeModules = {};
+fs.readdirSync(path.resolve(__dirname,'node_modules'))
+    .filter(x => ['.bin'].indexOf(x) === -1)
+    .forEach(mod => { nodeModules[mod] = `commonjs ${mod}`; });
+const server_config = {
+    name: 'server',
+    target: 'node',
+    node: {
+        __dirname: false
+    },
+    entry: path.join(__dirname,'server','index.js'),
+    output: {
+        path: path.join(__dirname,'build'),
+        filename: 'server.js'
+    },
+    externals: nodeModules,
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    babelrc: false,
+                    presets: ['es2016'],
+                }
+            }
+        ]
+    },
+    stats: {
+        colors:true
+    },
+};
 const config = {
+    name: 'web-app',
     target: 'web',
     bail: true,
     devtool: 'source-map',
@@ -103,4 +137,7 @@ const config = {
     ]
 };
 
-module.exports = config;
+module.exports = [
+    config,
+    server_config
+];
