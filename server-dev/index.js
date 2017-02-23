@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 process.env.NODE_ENV = 'development';
 const DEFAULT_PORT = process.env.PORT || 9000;
@@ -8,12 +8,13 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const path = require('path');
 const config = require('./webpack.dev.config.js');
-
 const compiler = webpack(config);
-
 const http = require('http');
-
-let app = require('../server/app');
+const express = require('express');
+const app = express();
+app.use(function(req, res, next) {
+    require('../server/app')(req, res, next);
+});
 
 let server;
 
@@ -22,20 +23,30 @@ function setupApp() {
         res.sendFile(path.resolve(__dirname, 'index.html'));
     });
     app.use(webpackDevMiddleware(compiler, {
+        noInfo: true,
         publicPath: config.output.publicPath,
-        stats: {colors: true}
     }));
     app.use(webpackHotMiddleware(compiler, {
         log: console.log,
         path: '/__webpack_hmr',
-        heartbeat: 10*1000
+        heartbeat: 10000
     }));
 }
 function startServer() {
     setupApp();
     server = http.createServer(app);
-    server.listen(DEFAULT_PORT, () => {
+    server.listen(DEFAULT_PORT, 'localhost', () => {
         console.info('App listening on port ' + DEFAULT_PORT);
     });
 }
 startServer();
+
+const watch = require('watch');
+watch.createMonitor(path.resolve(__dirname, '..','server'), (monitor) => {
+    monitor.on('changed', (f, stat) => {
+        console.log('Changed: ' + f + ', Time: ' + stat.mtime);
+        Object.keys(require.cache).forEach((id) => {
+            delete require.cache[id];
+        });
+    });
+});
