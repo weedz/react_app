@@ -1,4 +1,4 @@
-# React_app
+# React-Express boilerplate
 
 ##Requirements
 [Node](https://nodejs.org/en/) (tested with 6.10.0)
