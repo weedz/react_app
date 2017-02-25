@@ -21,7 +21,6 @@ router.post('/', jsonParser, function(req, res) {
 });
 router.post('/:id', function(req, res) {
     const connection = req.app.get('_store').mysql;
-    //console.log(req.body);
     connection.query("select * from test where id = " + connection.escape(req.params.id), function(err, rows, fields) {
         if (err) {
             console.error('Error: ' + err);

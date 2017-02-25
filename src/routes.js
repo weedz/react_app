@@ -5,7 +5,7 @@ import App from './components/App';
 import SQL from './components/SQL';
 import Home from './components/Home';
 import Customers from './components/Customers';
-//import NotFound from './components/NotFound';
+import NotFound from './components/NotFound';
 
 const Routes = (props) => (
     <Router {...props}>
@@ -13,6 +13,7 @@ const Routes = (props) => (
             <IndexRoute component={Home}/>
             <Route path="/sql" component={SQL}/>
             <Route path="/customers" components={Customers}/>
+            <Route path="*" components={NotFound}/>
         </Route>
     </Router>
 );

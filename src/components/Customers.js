@@ -24,6 +24,7 @@ export default class Customers extends React.Component {
         });
     }
     render() {
+        document.title = 'Customers';
         return(
             <CustomerList>
                 {this.state.items}
