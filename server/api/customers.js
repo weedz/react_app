@@ -6,7 +6,8 @@ const mysql = require('mysql');
 //const jsonParser = parser.json();
 
 router.post('/:id', function(req, res) {
-    const connection = req.app.get('_store').mysql;
+    // Uncomment to fetch data from myqsl server
+    /*const connection = req.app.get('_store').mysql;
     let str = "select * from customers";
     if (req.params.id != 'all') {
         str += ' where id = ' + connection.escape(req.params.id);
@@ -17,7 +18,19 @@ router.post('/:id', function(req, res) {
         } else {
             res.json(rows);
         }
-    });
+    });*/
+    res.json([
+        {
+            id: 1,
+            firstname: 'name_1',
+            lastname: 'lastname_1'
+        },
+        {
+            id: 2,
+            firstname: 'name_2',
+            lastname: 'lastname_2'
+        }
+    ]);
 });
 
 module.exports = router;

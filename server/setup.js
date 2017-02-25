@@ -1,7 +1,8 @@
 const mysql = require('mysql');
 
 module.exports = function(app) {
-    const connection = mysql.createConnection({
+    // Uncomment to use mysql
+    /*const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
@@ -10,5 +11,5 @@ module.exports = function(app) {
     connection.connect();
     app.set('_store', {
         mysql: connection
-    });
+    });*/
 };
