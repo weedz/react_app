@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, '/build');
@@ -16,6 +17,8 @@ fs.readdirSync(path.resolve(__dirname,'node_modules'))
     .forEach(mod => { nodeModules[mod] = `commonjs ${mod}`; });
 const server = {
     name: 'server',
+    bail: true,
+    devtool: false,
     target: 'node',
     node: {
         __dirname: false
@@ -33,21 +36,21 @@ const server = {
                 loader: 'babel-loader',
                 query: {
                     babelrc: false,
-                    presets: ['es2016'],
+                    presets: ['es2015'],
                 }
             }
         ]
     },
     plugins: [
         // Minify the code.
-        //new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
     ]
 };
 const client = {
     name: 'client',
     target: 'web',
     bail: true,
-    devtool: 'source-map',
+    devtool: false,
     entry: [
         APP_DIR + '/index.js'
     ],
@@ -79,14 +82,14 @@ const client = {
                 exclude: /node_modules/,
                 query: {
                     babelrc: false,
-                    presets: [require.resolve('babel-preset-react-app')],
+                    presets: ['es2015','react'],
                 }
             },
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: "css-loader?importLoaders=1"
+                    use: "css-loader"
                 })
             },
         ]
@@ -117,11 +120,15 @@ const client = {
             }
 
         }),
-        new ExtractTextPlugin("static/css/styles.css"),
+        new ExtractTextPlugin({
+            filename: "static/css/styles.css",
+            allChunks: true
+        }),
         // Minify the code.
+        new OptimizeCssAssetsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
-                screw_ie8: true, // React doesn't support IE8
+                screw_ie8: true,
                 warnings: false
             },
             mangle: {

@@ -85,3 +85,4 @@ class Parent extends React.Component {
         );
     }
 }
+module.exports = SQL;
