@@ -1,15 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {browserHistory} from 'react-router';
-import Routes from './routes';
-import './index.css';
+import App from './App';
 
-ReactDOM.render(
-    <Routes history={browserHistory}/>,
-  document.getElementById('root')
+const render = (Component) => ReactDOM.render(
+    <Component />,
+    document.getElementById('root')
 );
+render(App);
 
-if (module.hot) {
-    module.hot.accept();
-}
+if (module.hot) module.hot.accept('./App', () => render(App));

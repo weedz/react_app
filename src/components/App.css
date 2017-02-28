@@ -1,7 +1,5 @@
-.App {
-
-}
-
-.App-intro {
-  font-size: large;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
 }
