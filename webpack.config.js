@@ -36,7 +36,7 @@ const server = {
                 loader: 'babel-loader',
                 query: {
                     babelrc: false,
-                    presets: ['es2015'],
+                    presets: ['es2015','stage-0'],
                 }
             }
         ]
@@ -82,7 +82,7 @@ const client = {
                 exclude: /node_modules/,
                 query: {
                     babelrc: false,
-                    presets: ['es2015','react'],
+                    presets: ['es2015','react','stage-0'],
                 }
             },
             {

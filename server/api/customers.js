@@ -5,7 +5,7 @@ const mysql = require('mysql');
 //const parser = require('body-parser');
 //const jsonParser = parser.json();
 
-router.post('/:id', function(req, res) {
+router.get('/:id', function(req, res) {
     // Uncomment to fetch data from myqsl server
     /*const connection = req.app.get('_store').mysql;
     let str = "select * from customers";
