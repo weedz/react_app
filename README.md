@@ -1,5 +1,5 @@
 ##Requirements
-[Node](https://nodejs.org/en/) (tested with 6.10.0)
+[Node](https://nodejs.org/en/) (tested with 6.10.0 and 7.6.0)
 
 ##Setup
 Clone this repository into an empty folder. Run ``npm install`` to download node modules. 
