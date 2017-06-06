@@ -1,22 +1,22 @@
-##Requirements
+## Requirements
 [Node](https://nodejs.org/en/) (tested with 6.10.0 and 7.6.0)
 
-##Setup
+## Setup
 Clone this repository into an empty folder. Run ``npm install`` to download node modules. 
 
 Run ``npm run build`` to build production. Run ``npm start`` to start express server.
 
 Start express server with ``npm start``, start development server with ``npm run start-dev``. 
 
-###MySQL server setup
+### MySQL server setup
 Recommends [MariaDB](https://downloads.mariadb.org/). Download and extract the zip file. Server can be started with this script: 
 
-#####Windows:
+##### Windows:
 ```
 @echo off
 bin\mysqld --standalone --console
 ```
-#####Linux
+##### Linux
 ```
 ./bin/mysqld --standalone --console
 ```

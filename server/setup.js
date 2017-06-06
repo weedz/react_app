@@ -1,15 +1,14 @@
-const mysql = require('mysql');
+module.exports = function(app, express, HOST, PORT, staticPath) {
+	const path = require('path');
+	app.use('/', require('./app'));
 
-module.exports = function(app) {
-    // Uncomment to use mysql
-    /*const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'reactjs'
-    });
-    connection.connect();
-    app.set('_store', {
-        mysql: connection
-    });*/
+	app.use(express.static(staticPath));
+
+	app.get('/*', (req, res) => {
+		res.sendFile(path.resolve(staticPath,'index.html'));
+	});
+
+	app.listen(PORT, () => {
+		console.info('App listening on port ' + PORT);
+	});
 };

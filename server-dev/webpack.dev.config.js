@@ -3,65 +3,60 @@ const path = require('path');
 
 const APP_DIR = path.resolve(__dirname, '../src');
 
-process.env.NODE_ENV = 'development';
+const vendorPackages = [
+	'react',
+	'react-dom',
+	'react-router',
+];
 
 const config = {
-    name: 'client',
-    target: 'web',
-    devtool: 'inline-sourcemap',
-    context: __dirname,
-    entry: [
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        path.resolve(APP_DIR, './index.js')
-    ],
-    stats: {
-        colors: true
-    },
-    output: {
-        path: __dirname,
-        publicPath: '/',
-        filename: 'bundle.js'
-    },
-    module: {
-        loaders: [
-            {
-                exclude: [
-                    /node_modules/,
-                    /\.html$/,
-                    /\.(js|jsx)$/,
-                    /\.css$/,
-                    /\.json$/,
-                    /\.svg$/
-                ],
-                loader: 'url',
-                query: {
-                    limit: 10000,
-                    name: 'static/media/[name].[ext]'
-                }
-            },
-            {
-                test: /\.(js|jsx)$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    babelrc: false,
-                    presets: ['es2015','react'],
-                }
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
-        ]
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            }
-        }),
-    ]
+	name: 'client',
+	target: 'web',
+	devtool: 'source-map',
+	context: __dirname,
+	entry: {
+		bundle: path.join(APP_DIR,'index.js'),
+		vendor: vendorPackages
+	},
+	stats: {
+		colors: true
+	},
+	output: {
+		path: path.join(__dirname,'js'),
+		publicPath: '/js/',
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.jsx?$/,
+				loader: 'babel-loader',
+				exclude: /node_modules/,
+				query: {
+					babelrc: false,
+					presets: ['react','stage-0'],
+				}
+			},
+			{
+				test: /\.css$/,
+				loader: 'style-loader!css-loader'
+			},
+		]
+	},
+	plugins: [
+		new webpack.NoEmitOnErrorsPlugin(),
+		new webpack.DefinePlugin({
+			'process.env': {
+				NODE_ENV: JSON.stringify('development')
+			}
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "vendor",
+			minChunks: Infinity
+		}),
+
+	]
 };
 
 module.exports = config;
